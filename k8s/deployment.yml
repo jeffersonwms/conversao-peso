@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-conversao-peso
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-conversao-peso
+  template:
+    metadata:
+      labels:
+        app: web-conversao-peso
+    spec:
+      containers:
+        - name: web-conversao-peso
+          image: jeffersonwms/conversao-peso:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-conversao-peso
+spec:
+  selector:
+    app: web-conversao-peso
+  ports:
+    - port: 80
+      protocol: TCP
+      name: http
+  type: NodePort
