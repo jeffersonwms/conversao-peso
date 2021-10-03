@@ -26,8 +26,8 @@ jobs:
           file: ./src/Dockerfile
           push: true
           tags: |
-            $GITHUB_REPOSITORY:latest
-            $GITHUB_REPOSITORY:${{ github.run_number }}
+            ${{ github.repository }}:latest
+            ${{ github.repository }}:${{ github.run_number }}
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
@@ -43,6 +43,6 @@ jobs:
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v1.3
         with:
-          images: $GITHUB_REPOSITORY:${{ github.run_number }}
+          images: ${{ github.repository }}:${{ github.run_number }}
           manifests: |
             k8s/deployment.yml
